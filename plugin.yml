@@ -1,0 +1,15 @@
+main: com.amoebaman.engrave.Engrave
+
+name: Engrave
+author: AmoebaMan
+version: 1.0
+description: Allows messages to be engraved on blocks and read at later dates
+
+commands:
+  engrave:
+    aliases: [etch, carve]
+    description: Engraves text into a block
+    usage: /engrave <message...>
+    permission: engrave.use
+  debug-engrave:
+    permission: engrave.debug

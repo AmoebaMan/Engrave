@@ -1,0 +1,36 @@
+block-durability:
+  stone: 25
+  stone_bricks: 25
+  cobblestone: 15
+  brick: 20
+  wool: 10
+  dirt: 1
+  grass: 1
+  bedrock: 10000
+  gravel: 0
+  sand: 0
+  iron_block: 50
+  diamond_block: 60
+tool-quality:
+  air: 1
+  wood_pickaxe: 10
+  gold_pickaxe: 15
+  stone_pickaxe: 35
+  iron_pickaxe: 60
+  diamond_pickaxe: 100
+  wood_sword: 8
+  gold_sword: 12
+  stone_sword: 25
+  iron_sword: 45
+  diamond_sword: 75
+  ink_sack: 60
+  shears: 20
+  iron_ingot: 20
+  diamond: 30
+visibility-checks-per-second: 2
+notice-range: 10
+read-range: 3
+shield-word: elbereth
+engraving-tool-damage: 75
+
+  
