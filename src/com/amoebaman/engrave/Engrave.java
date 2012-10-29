@@ -157,7 +157,7 @@ public class Engrave extends JavaPlugin implements Listener{
 				player.setItemInHand(null);
 			}
 			else
-				item.setDurability((short) (item.getDurability() + ConfigHandler.getEngravingDamage()));
+				item.setDurability((short) (item.getDurability() + ConfigHandler.getEngravingDamage(message)));
 			player.sendMessage(ChatColor.ITALIC + "You engraved in the " + block + " with your " + tool + ":");
 			player.sendMessage(engraving.getMessage());
 		}
@@ -271,6 +271,9 @@ public class Engrave extends JavaPlugin implements Listener{
 				if(player.getNoDamageTicks() == 0){
 					player.sendMessage(ChatColor.ITALIC + "The engraving's shield word protects you from harm!");
 					player.setNoDamageTicks(60);
+					if(engraving.degrade(event.getDamage() * 5))
+						if(!engraving.getMessage().toLowerCase().contains(ConfigHandler.getShieldWord()))
+							player.sendMessage(ChatColor.ITALIC + "The engraving was degraded by the damage!");
 				}
 				break;
 			default:

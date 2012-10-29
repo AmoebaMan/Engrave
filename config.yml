@@ -31,6 +31,6 @@ visibility-checks-per-second: 2
 notice-range: 10
 read-range: 3
 shield-word: elbereth
-engraving-tool-damage: 75
+tool-damage-per-character: 4
 
   

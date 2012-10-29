@@ -44,8 +44,8 @@ public class ConfigHandler {
 		return 20 / root.getInt("visibility-checks-per-second", 2);
 	}
 	
-	public static int getEngravingDamage(){
-		return root.getInt("engraving-tool-damage", 75);
+	public static int getEngravingDamage(String message){
+		return root.getInt("tool-damage-per-character", 4) * message.length();
 	}
 	
 	public static int getNoticeRange(){
