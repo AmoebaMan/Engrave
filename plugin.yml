@@ -2,7 +2,7 @@ main: com.amoebaman.engrave.Engrave
 
 name: Engrave
 author: AmoebaMan
-version: 1.1
+version: 1.2
 description: Allows messages to be engraved on blocks and read at later dates
 
 commands:
