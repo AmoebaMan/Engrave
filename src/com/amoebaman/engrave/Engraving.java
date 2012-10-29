@@ -67,15 +67,21 @@ public class Engraving {
 	public boolean isNull(){ return loc == null; }
 	
 	public boolean degrade(int damage){
+		
+		//Chance for each letter to degrade based on durability and damage dealt
 		double chance = damage / getDurability();
 		String newMessage = "";
 		for(char letter : message.toCharArray()){
+			
+			//If the letter wins the chance to be degraded, replace it with a random character or a space
 			if(Math.random() < chance){
 				if(Math.random() > 0.3 && letter != ' ')
 					newMessage += (char)(new Random().nextInt(93) + 33);
 				else
 					newMessage += " ";
 			}
+			
+			//Otherwise, just leave it be
 			else
 				newMessage += letter;
 		}

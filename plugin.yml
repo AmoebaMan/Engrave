@@ -13,3 +13,17 @@ commands:
     permission: engrave.use
   debug-engrave:
     permission: engrave.debug
+    
+permissions:
+  engrave.use:
+    description: Allows the player to engrave on blocks
+    default: true
+  engrave.read:
+    description: Allows the player to read engravings
+    default: true
+  engrave.degrade:
+    description: Allows the player to degrade engravings
+    default: true
+  engrave.debug:
+    description: Allows the player to debug engravings
+    default: op
