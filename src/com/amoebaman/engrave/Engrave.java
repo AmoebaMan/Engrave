@@ -266,12 +266,12 @@ public class Engrave extends JavaPlugin implements Listener{
 			case POISON:
 			case PROJECTILE:
 				
-				//Cancel the damage, then give them a very brief bit of invulnerability
+				//Cancel the damage, then give them a very brief bit of protection
 				event.setCancelled(true);
 				if(player.getNoDamageTicks() == 0){
 					player.sendMessage(ChatColor.ITALIC + "The engraving's shield word protects you from harm!");
 					player.setNoDamageTicks(60);
-					if(engraving.degrade(event.getDamage() * 5))
+					if(engraving.degrade((int) (event.getDamage() * 5)))
 						if(!engraving.getMessage().toLowerCase().contains(ConfigHandler.getShieldWord()))
 							player.sendMessage(ChatColor.ITALIC + "The engraving was degraded by the damage!");
 				}

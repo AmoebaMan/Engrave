@@ -33,6 +33,7 @@
 .DS_Store?
 .project
 .classpath
+.settings
 ._*
 .Spotlight-V100
 .Trashes
