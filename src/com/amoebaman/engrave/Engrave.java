@@ -308,16 +308,10 @@ public class Engrave extends JavaPlugin implements Listener{
 
 	//Statically define all the blocks that players can see through
 	static{
-		transparent = new HashSet<Byte>(); transparent.add((byte) 0); transparent.add((byte) 6); transparent.add((byte) 8);
-		transparent.add((byte) 9); transparent.add((byte) 20); transparent.add((byte) 27); transparent.add((byte) 28);
-		transparent.add((byte) 31); transparent.add((byte) 32); transparent.add((byte) 37); transparent.add((byte) 38);
-		transparent.add((byte) 39); transparent.add((byte) 40); transparent.add((byte) 50); transparent.add((byte) 55);
-		transparent.add((byte) 63); transparent.add((byte) 65); transparent.add((byte) 66); transparent.add((byte) 68);
-		transparent.add((byte) 69); transparent.add((byte) 70); transparent.add((byte) 72); transparent.add((byte) 75);
-		transparent.add((byte) 76); transparent.add((byte) 77); transparent.add((byte) 78); transparent.add((byte) 93);
-		transparent.add((byte) 94); transparent.add((byte) 96); transparent.add((byte) 101); transparent.add((byte) 102);
-		transparent.add((byte) 104); transparent.add((byte) 105); transparent.add((byte) 106); transparent.add((byte) 111);
-		transparent.add((byte) 131); transparent.add((byte) 132); transparent.add((byte) 143);
+		transparent = new HashSet<Byte>();
+		for(Material mat : Material.values())
+			if((mat.isTransparent() || !mat.isOccluding() || !mat.isSolid()) && mat.getId() <= Byte.MAX_VALUE)
+				transparent.add((byte) mat.getId());
 	}
 
 }
