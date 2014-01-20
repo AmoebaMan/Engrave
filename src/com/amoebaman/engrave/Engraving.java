@@ -66,7 +66,7 @@ public class Engraving {
 	public String getMessage(){ return color + message; }
 	public boolean isNull(){ return loc == null; }
 	
-	public boolean degrade(int damage){
+	public boolean degrade(double damage){
 		
 		//Chance for each letter to degrade based on durability and damage dealt
 		double chance = damage / getDurability();
