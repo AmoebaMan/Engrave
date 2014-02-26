@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Dye;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@SuppressWarnings("deprecation")
 public class Engrave extends JavaPlugin implements Listener{
 
 	public final static String mainDir = "plugins/Engrave";
@@ -81,7 +82,7 @@ public class Engrave extends JavaPlugin implements Listener{
 					Block block = player.getTargetBlock(transparent, ConfigHandler.getNoticeRange());
 					if(!block.equals(lastObserved.get(player))){
 						lastObserved.put(player, block);
-						Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Location.stringSave(block.getLocation())));
+						Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(block.getLocation())));
 						if(!engraving.isNull())
 							player.sendMessage(ChatColor.ITALIC + "You see something written on a block...");
 					}
@@ -90,7 +91,7 @@ public class Engrave extends JavaPlugin implements Listener{
 					block = player.getTargetBlock(transparent, ConfigHandler.getReadRange());
 					if(!block.equals(lastRead.get(player))){
 						lastRead.put(player, block);
-						Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Location.stringSave(block.getLocation())));
+						Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(block.getLocation())));
 						if(!engraving.isNull())
 							player.sendMessage(engraving.getMessage());
 					}
@@ -169,10 +170,10 @@ public class Engrave extends JavaPlugin implements Listener{
 				player.sendMessage(ChatColor.ITALIC + "You must be near a block to debug it!");
 				return true;
 			}
-			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Location.stringSave(target.getLocation())));
+			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(target.getLocation())));
 			if(engraving.isNull())
 				return true;
-			player.sendMessage("Location: " + S_Location.stringSave(engraving.getBlock().getLocation()));
+			player.sendMessage("Location: " + S_Loc.stringSave(engraving.getBlock().getLocation()));
 			player.sendMessage("Tool: " + engraving.getTool().name().toLowerCase().replaceAll("_", " "));
 			player.sendMessage("Durability: " + engraving.getDurability());
 			player.sendMessage("Damage: " + engraving.getDamage());
@@ -197,7 +198,7 @@ public class Engrave extends JavaPlugin implements Listener{
 
 		//Degrade the engraving if it's hit, according to what tool was used to hit it
 		if(event.getAction() == Action.LEFT_CLICK_BLOCK && event.getPlayer().hasPermission("engrave.degrade")){
-			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Location.stringSave(event.getClickedBlock().getLocation())));
+			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(event.getClickedBlock().getLocation())));
 			if(engraving.isNull())
 				return;
 			if(engraving.degrade(ConfigHandler.getToolQuality(event.getPlayer().getItemInHand().getType()) + 3))
@@ -207,7 +208,7 @@ public class Engrave extends JavaPlugin implements Listener{
 		
 		//Read the engraving if it's examined
 		if(event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getPlayer().hasPermission("engrave.read")){
-			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Location.stringSave(event.getClickedBlock().getLocation())));
+			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(event.getClickedBlock().getLocation())));
 			if(engraving.isNull())
 				return;
 			event.getPlayer().sendMessage(engraving.getMessage());
@@ -222,7 +223,7 @@ public class Engrave extends JavaPlugin implements Listener{
 		if(steppedOn.equals(lastSteppedOn.get(event.getPlayer())))
 			return;
 		lastSteppedOn.put(event.getPlayer(), steppedOn);
-		Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Location.stringSave( steppedOn.getLocation() )));
+		Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave( steppedOn.getLocation() )));
 		if(engraving.isNull())
 			return;
 		
@@ -236,10 +237,10 @@ public class Engrave extends JavaPlugin implements Listener{
 	}
 
 	//Remove records of engravings if their blocks are destroyed
-	@EventHandler public void onBlockBreak(BlockBreakEvent event){ engravings.set(S_Location.stringSave(event.getBlock().getLocation()), null); }
-	@EventHandler public void onBlockBurn(BlockBurnEvent event){ engravings.set(S_Location.stringSave(event.getBlock().getLocation()), null); }
-	@EventHandler public void onBlockFade(BlockFadeEvent event){ engravings.set(S_Location.stringSave(event.getBlock().getLocation()), null); }	
-	@EventHandler public void onEntityExplode(EntityExplodeEvent event){ for(Block block : event.blockList()) engravings.set(S_Location.stringSave(block.getLocation()), null); }
+	@EventHandler public void onBlockBreak(BlockBreakEvent event){ engravings.set(S_Loc.stringSave(event.getBlock().getLocation()), null); }
+	@EventHandler public void onBlockBurn(BlockBurnEvent event){ engravings.set(S_Loc.stringSave(event.getBlock().getLocation()), null); }
+	@EventHandler public void onBlockFade(BlockFadeEvent event){ engravings.set(S_Loc.stringSave(event.getBlock().getLocation()), null); }	
+	@EventHandler public void onEntityExplode(EntityExplodeEvent event){ for(Block block : event.blockList()) engravings.set(S_Loc.stringSave(block.getLocation()), null); }
 	
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event){
@@ -249,7 +250,7 @@ public class Engrave extends JavaPlugin implements Listener{
 		//Get the engraving they're stepping on
 		Player player = (Player) event.getEntity();
 		Block steppedOn = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
-		Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Location.stringSave(steppedOn.getLocation())));
+		Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(steppedOn.getLocation())));
 		if(engraving.isNull())
 			return;
 		

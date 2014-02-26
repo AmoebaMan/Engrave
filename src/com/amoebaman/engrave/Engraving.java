@@ -34,7 +34,7 @@ public class Engraving {
 	public Engraving(ConfigurationSection section){
 		if(section == null)
 			return;
-		loc = S_Location.stringLoad(section.getName());
+		loc = S_Loc.stringLoad(section.getName());
 		block = Material.matchMaterial(section.getString("block"));
 		tool = Material.matchMaterial(section.getString("tool"));
 		pureMessage = section.getString("pureMessage");
@@ -45,10 +45,10 @@ public class Engraving {
 	
 	public void save(ConfigurationSection container){
 		if(message.trim().equals("")){
-			container.set(S_Location.stringSave(loc), null);
+			container.set(S_Loc.stringSave(loc), null);
 			return;
 		}
-		ConfigurationSection section = container.createSection(S_Location.stringSave(loc));
+		ConfigurationSection section = container.createSection(S_Loc.stringSave(loc));
 		section.set("block", block.name());
 		section.set("tool", tool.name());
 		section.set("pureMessage", pureMessage);

@@ -60,7 +60,8 @@ public class ConfigHandler {
 		return root.getString("shield-word", "elbereth");
 	}
 	
-	public static Material getMat(String name) {
+	@SuppressWarnings("deprecation")
+    public static Material getMat(String name) {
 		name = name.toUpperCase().replace(' ', '_');
 		Material mat = null;
 		if(mat == null){
