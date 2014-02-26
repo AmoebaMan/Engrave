@@ -5,16 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
-public class S_Location{
-	
-	/*
-	 * Locations aren't very convenient to deal with as far as saving and loading
-	 * Not serializable, and their toString() is far less compact than it could be
-	 * This class defines static methods for converting between Locations and Strings
-	 * It also contains static methods for saving and loading Locations to YAML configs
-	 * 
-	 * Feel free to copy the code and use it yourself if you like :D
-	 */
+public class S_Loc{
 	
 	public static void configSave(Location loc, ConfigurationSection config){
 		config.set("world", loc.getWorld().getName());
