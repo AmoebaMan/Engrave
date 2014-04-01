@@ -82,7 +82,7 @@ public class Engrave extends JavaPlugin implements Listener{
 					Block block = player.getTargetBlock(transparent, ConfigHandler.getNoticeRange());
 					if(!block.equals(lastObserved.get(player))){
 						lastObserved.put(player, block);
-						Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(block.getLocation())));
+						Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(block.getLocation(), true, false)));
 						if(!engraving.isNull())
 							player.sendMessage(ChatColor.ITALIC + "You see something written on a block...");
 					}
@@ -91,7 +91,7 @@ public class Engrave extends JavaPlugin implements Listener{
 					block = player.getTargetBlock(transparent, ConfigHandler.getReadRange());
 					if(!block.equals(lastRead.get(player))){
 						lastRead.put(player, block);
-						Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(block.getLocation())));
+						Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(block.getLocation(), true, false)));
 						if(!engraving.isNull())
 							player.sendMessage(engraving.getMessage());
 					}
@@ -170,10 +170,10 @@ public class Engrave extends JavaPlugin implements Listener{
 				player.sendMessage(ChatColor.ITALIC + "You must be near a block to debug it!");
 				return true;
 			}
-			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(target.getLocation())));
+			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(target.getLocation(), true, false)));
 			if(engraving.isNull())
 				return true;
-			player.sendMessage("Location: " + S_Loc.stringSave(engraving.getBlock().getLocation()));
+			player.sendMessage("Location: " + S_Loc.stringSave(engraving.getBlock().getLocation(), true, false));
 			player.sendMessage("Tool: " + engraving.getTool().name().toLowerCase().replaceAll("_", " "));
 			player.sendMessage("Durability: " + engraving.getDurability());
 			player.sendMessage("Damage: " + engraving.getDamage());
@@ -198,7 +198,7 @@ public class Engrave extends JavaPlugin implements Listener{
 
 		//Degrade the engraving if it's hit, according to what tool was used to hit it
 		if(event.getAction() == Action.LEFT_CLICK_BLOCK && event.getPlayer().hasPermission("engrave.degrade")){
-			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(event.getClickedBlock().getLocation())));
+			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(event.getClickedBlock().getLocation(), true, false)));
 			if(engraving.isNull())
 				return;
 			if(engraving.degrade(ConfigHandler.getToolQuality(event.getPlayer().getItemInHand().getType()) + 3))
@@ -208,7 +208,7 @@ public class Engrave extends JavaPlugin implements Listener{
 		
 		//Read the engraving if it's examined
 		if(event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getPlayer().hasPermission("engrave.read")){
-			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(event.getClickedBlock().getLocation())));
+			Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(event.getClickedBlock().getLocation(), true, false)));
 			if(engraving.isNull())
 				return;
 			event.getPlayer().sendMessage(engraving.getMessage());
@@ -223,7 +223,7 @@ public class Engrave extends JavaPlugin implements Listener{
 		if(steppedOn.equals(lastSteppedOn.get(event.getPlayer())))
 			return;
 		lastSteppedOn.put(event.getPlayer(), steppedOn);
-		Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave( steppedOn.getLocation() )));
+		Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(steppedOn.getLocation(), true, false)));
 		if(engraving.isNull())
 			return;
 		
@@ -237,10 +237,10 @@ public class Engrave extends JavaPlugin implements Listener{
 	}
 
 	//Remove records of engravings if their blocks are destroyed
-	@EventHandler public void onBlockBreak(BlockBreakEvent event){ engravings.set(S_Loc.stringSave(event.getBlock().getLocation()), null); }
-	@EventHandler public void onBlockBurn(BlockBurnEvent event){ engravings.set(S_Loc.stringSave(event.getBlock().getLocation()), null); }
-	@EventHandler public void onBlockFade(BlockFadeEvent event){ engravings.set(S_Loc.stringSave(event.getBlock().getLocation()), null); }	
-	@EventHandler public void onEntityExplode(EntityExplodeEvent event){ for(Block block : event.blockList()) engravings.set(S_Loc.stringSave(block.getLocation()), null); }
+	@EventHandler public void onBlockBreak(BlockBreakEvent event){ engravings.set(S_Loc.stringSave(event.getBlock().getLocation(), true, false), null); }
+	@EventHandler public void onBlockBurn(BlockBurnEvent event){ engravings.set(S_Loc.stringSave(event.getBlock().getLocation(), true, false), null); }
+	@EventHandler public void onBlockFade(BlockFadeEvent event){ engravings.set(S_Loc.stringSave(event.getBlock().getLocation(), true, false), null); }	
+	@EventHandler public void onEntityExplode(EntityExplodeEvent event){ for(Block block : event.blockList()) engravings.set(S_Loc.stringSave(block.getLocation(), true, false), null); }
 	
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event){
@@ -250,7 +250,7 @@ public class Engrave extends JavaPlugin implements Listener{
 		//Get the engraving they're stepping on
 		Player player = (Player) event.getEntity();
 		Block steppedOn = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
-		Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(steppedOn.getLocation())));
+		Engraving engraving = new Engraving(engravings.getConfigurationSection(S_Loc.stringSave(steppedOn.getLocation(), true, false)));
 		if(engraving.isNull())
 			return;
 		
@@ -311,7 +311,7 @@ public class Engrave extends JavaPlugin implements Listener{
 	static{
 		transparent = new HashSet<Byte>();
 		for(Material mat : Material.values())
-			if((mat.isTransparent() || !mat.isOccluding() || !mat.isSolid()) && mat.getId() <= Byte.MAX_VALUE)
+			if(mat.isBlock() && (mat.isTransparent() || !mat.isOccluding() || !mat.isSolid()) && mat.getId() <= Byte.MAX_VALUE)
 				transparent.add((byte) mat.getId());
 	}
 

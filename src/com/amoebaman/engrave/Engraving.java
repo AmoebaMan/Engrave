@@ -45,10 +45,10 @@ public class Engraving {
 	
 	public void save(ConfigurationSection container){
 		if(message.trim().equals("")){
-			container.set(S_Loc.stringSave(loc), null);
+			container.set(S_Loc.stringSave(loc, true, false), null);
 			return;
 		}
-		ConfigurationSection section = container.createSection(S_Loc.stringSave(loc));
+		ConfigurationSection section = container.createSection(S_Loc.stringSave(loc, true, false));
 		section.set("block", block.name());
 		section.set("tool", tool.name());
 		section.set("pureMessage", pureMessage);
