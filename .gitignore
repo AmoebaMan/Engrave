@@ -55,3 +55,4 @@ xcuserdata/
 ############
 *.iml
 .idea
+/bin/
